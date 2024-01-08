@@ -54,7 +54,7 @@ function getPointGen() {
 function addedPlayerData() { return {
 }}
 
-// Display extra things at the top of the page
+// Display extra things at the top of the page ye
 var displayThings = [ "Endgame: 100000 Points"
 ]
 
