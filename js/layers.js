@@ -118,7 +118,7 @@ addLayer("s", {
                 return hasUpgrade("s", 15); // Adjust the requirement as needed
             },
             effect() {
-                return player.points.add(1).log10().add(1).pow(0.5); // Adjust the formula as needed
+                return player.points.add(1).log10().add(1).pow(0.55); // Adjust the formula as needed
             },
             effectDisplay() {
                 return format(upgradeEffect(this.layer, this.id)) + "x";
