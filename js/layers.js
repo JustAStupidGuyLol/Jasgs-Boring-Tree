@@ -35,77 +35,96 @@ addLayer("s", {
         },
     ],
     layerShown() { return true },
-    upgrades: {
-        11: {
-            title: "Really Boring UP1",
-            description: "5x point gain. Starting with big numbers. ",
-            cost: new Decimal(2),
-            onPurchase() {
-                player[this.layer].latestUpgrade = 11;
+        upgrades: {
+            11: {
+                title: "Really Boring UP1",
+                description: "5x point gain. Starting with big numbers. ",
+                cost: new Decimal(2),
+                onPurchase() {
+                    player[this.layer].latestUpgrade = 11;
+                },
             },
+            12: {
+                title: "Really Boring UP2",
+                description: "2x point gain. Too boring. ",
+                cost: new Decimal(6),
+                unlocked() {
+                    return hasUpgrade("s", 11);
+                },
+                onPurchase() {
+                    player[this.layer].latestUpgrade = 12;
+                },
+            },
+            13: {
+                title: "Really Boring UP3",
+                description: "When will this wave of boring upgrades end? Starting points boost points gain slightly. ",
+                cost: new Decimal(10),
+                unlocked() {
+                    return hasUpgrade("s", 12);
+                },
+                onPurchase() {
+                    player[this.layer].latestUpgrade = 13;
+                },
+                effect() {
+                    let baseEffect = player[this.layer].points.add(1.4).pow(0.125);
+        
+                    // Check if Upgrade 14 is purchased and increase the effect accordingly
+                    if (hasUpgrade("s", 14)) {
+                        baseEffect = baseEffect.pow(1.5);
+                    }
+        
+                    return baseEffect;
+                },
+                effectDisplay() {
+                    return format(upgradeEffect(this.layer, this.id)) + "x";
+                },
+            },
+            14: {
+                title: "Really Boring UP4",
+                description: "Upgrade 13 formula is stronger.",
+                cost: new Decimal(20),
+                unlocked() {
+                    return hasUpgrade("s", 13);
+                },
+                onPurchase() {
+                    player[this.layer].upgrades[13] = player[this.layer].upgrades[13].pow(0.4);
+                    player[this.layer].latestUpgrade = 14;
+                },
+            },
+            15: {
+                title: "Really Boring UP5",
+                description: "Multiply starting point gain based on current points.",
+                cost: new Decimal(30),
+                unlocked() {
+                    return hasUpgrade("s", 14);
+                },
+                effect() {
+                    return player.points.add(1).log10().add(1).pow(0.9); // Adjust the formula as needed
+                },
+                effectDisplay() {
+                    return format(upgradeEffect(this.layer, this.id)) + "x";
+                },
+                onPurchase() {
+                    player[this.layer].latestUpgrade = 15;
+                },
+                row: 2,
+                row: 2,
         },
-        12: {
-            title: "Really Boring UP2",
-            description: "2x point gain. Too boring. ",
-            cost: new Decimal(6),
+        21:  {
+            title: "Really Boring UP6",
+            description: "Points boost their own gain based on their amount.",
+            cost: new Decimal(60),
             unlocked() {
-                return hasUpgrade("s", 11);
-            },
-            onPurchase() {
-                player[this.layer].latestUpgrade = 12;
-            },
-        },
-        13: {
-            title: "Really Boring UP3",
-            description: "When will this wave of boring upgrades end? Starting points boost points gain slightly. ",
-            cost: new Decimal(10),
-            unlocked() {
-                return hasUpgrade("s", 12);
-            },
-            onPurchase() {
-                player[this.layer].latestUpgrade = 13;
+                return hasUpgrade("s", 15); // Adjust the requirement as needed
             },
             effect() {
-                let baseEffect = player[this.layer].points.add(1.4).pow(0.125);
-
-                // Check if Upgrade 14 is purchased and increase the effect accordingly
-                if (hasUpgrade("s", 14)) {
-                    baseEffect = baseEffect.pow(1.5);
-                }
-
-                return baseEffect;
+                return player.points.add(1).log10().add(1).pow(0.5); // Adjust the formula as needed
             },
             effectDisplay() {
                 return format(upgradeEffect(this.layer, this.id)) + "x";
             },
-        },
-        14: {
-            title: "Really Boring UP4",
-            description: "Upgrade 13 formula is stronger.",
-            cost: new Decimal(20),
-            unlocked() {
-                return hasUpgrade("s", 13);
-            },
             onPurchase() {
-                player[this.layer].upgrades[13] = player[this.layer].upgrades[13].pow(0.4);
-                player[this.layer].latestUpgrade = 14;
-            },
-        },
-        15: {
-            title: "Starting Point Multiplier",
-            description: "Multiply starting point gain based on current points.",
-            cost: new Decimal(30),
-            unlocked() {
-                return hasUpgrade("s", 14);
-            },
-            effect() {
-                return player.points.add(1).log10().add(1).pow(0.8); // Adjust the formula as needed
-            },
-            effectDisplay() {
-                return format(upgradeEffect(this.layer, this.id)) + "x";
-            },
-            onPurchase() {
-                player[this.layer].latestUpgrade = 15;
+                player[this.layer].latestUpgrade = 21;
             },
         },
     },
