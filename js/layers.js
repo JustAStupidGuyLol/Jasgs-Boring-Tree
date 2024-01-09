@@ -18,9 +18,11 @@ addLayer("s", {
     exponent: 0.3,
     gainMult() {
         let mult = new Decimal(1);
-        if (hasUpgrade('s', 15)) mult = mult.times(upgradeEffect('s', 15))
+        if (hasUpgrade('s', 15)) mult = mult.times(upgradeEffect('s', 15));
+        if (hasUpgrade('s', 23)) mult = mult.times((3));
+        if (hasUpgrade('s', 24)) mult = mult.times((1.5));
         return mult;
-    },
+              },
     gainExp() {
         return new Decimal(1);
     },
@@ -108,24 +110,56 @@ addLayer("s", {
                     player[this.layer].latestUpgrade = 15;
                 },
                 row: 2,
-                row: 2,
-        },
-        21:  {
-            title: "Really Boring UP6",
-            description: "Points boost their own gain based on their amount.",
-            cost: new Decimal(60),
-            unlocked() {
-                return hasUpgrade("s", 15); // Adjust the requirement as needed
+               },
+            21:  {
+               title: "Really Boring UP6",
+                 description: "Points boost their own gain based on their amount.",
+                cost: new Decimal(60),
+                 unlocked() {
+                return hasUpgrade("s", 15); 
             },
             effect() {
-                return player.points.add(1).log10().add(1).pow(0.55); // Adjust the formula as needed
+                return player.points.add(1).log10().add(1).pow(0.55);
             },
             effectDisplay() {
                 return format(upgradeEffect(this.layer, this.id)) + "x";
             },
             onPurchase() {
-                player[this.layer].latestUpgrade = 21;
+                player[this.layer].latestUpgrade = 21; },
+               },
+
+          22: {
+                title: "Really Boring UP7",
+                description: "4.10x point gain. Why not? ",
+                cost: new Decimal(100),
+                unlocked() { 
+                        return hasUpgrade("s", 21);
+                },
+                onPurchase() {
+                    player[this.layer].latestUpgrade = 22; 
+                },
+              },
+              23: {
+                title: "Really Boring UP8",
+                description: "Multiply starting points gain by 3. ",
+                cost: new Decimal(250),
+                unlocked() { 
+                    return hasUpgrade("s", 22);
             },
-        },
-    },
-}); // blah blah
+                onPurchase() {
+                    player[this.layer].latestUpgrade = 23; 
+                },
+              },
+              24: {
+                title: "Really Boring UP9",
+                description: "Multiply points and starting points gain by 1.5x. ",
+                cost: new Decimal(1000),
+                unlocked() { 
+                    return hasUpgrade("s", 23);
+            },
+                onPurchase() {
+                    player[this.layer].latestUpgrade = 24; 
+                },
+              },
+            },
+    })
