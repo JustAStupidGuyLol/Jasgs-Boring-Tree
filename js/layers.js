@@ -17,7 +17,7 @@ addLayer("s", {
     type: "normal",
     exponent: 0.3,
     gainMult() {
-        let mult = new Decimal(1);
+        let mult = new Decimal(1); // starting points gain
         if (hasUpgrade('s', 15)) mult = mult.times(upgradeEffect('s', 15));
         if (hasUpgrade('s', 23)) mult = mult.times((3));
         if (hasUpgrade('s', 24)) mult = mult.times((1.5));
